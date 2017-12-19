@@ -31,7 +31,7 @@ namespace GameLoop
             uint flags);
 
         private PreciseTimer m_Timer = new PreciseTimer();
-        public delegate void LoopCallback(double elapsedTime);
+        public delegate void LoopCallback(float deltaTime);
         private LoopCallback m_Callback;
 
         public FastLoop(LoopCallback callback)
@@ -40,7 +40,7 @@ namespace GameLoop
             Application.Idle += new EventHandler(OnApplicationEnterIdle);
         }
 
-        void OnApplicationEnterIdle(object sender, EventArgs e)
+        private void OnApplicationEnterIdle(object sender, EventArgs e)
         {
             while (IsAppStillIdle())
             {
@@ -50,8 +50,7 @@ namespace GameLoop
 
         private bool IsAppStillIdle()
         {
-            Message message;
-            return !PeekMessage(out message, IntPtr.Zero, 0, 0, 0);
+            return !PeekMessage(out Message message, IntPtr.Zero, 0, 0, 0);
         }
     }
 }

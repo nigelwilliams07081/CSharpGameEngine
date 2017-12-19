@@ -19,14 +19,20 @@ namespace GameLoop
 
         private long m_TicksPerSecond = 0;
         private long m_PreviousElapsedTime = 0;
+
+        public PreciseTimer()
+        {
+            QueryPerformanceFrequency(ref m_TicksPerSecond);
+            GetElapsedTime(); // Get rid of first rubbish result
+        }
         
-        public double GetElapsedTime()
+        public float GetElapsedTime()
         {
             long time = 0;
             QueryPerformanceCounter(ref time);
-            double elapsedTime = (double) (time - m_PreviousElapsedTime) / (double) m_TicksPerSecond;
+            float deltaTime = (float) (time - m_PreviousElapsedTime) / (float) m_TicksPerSecond;
             m_PreviousElapsedTime = time;
-            return elapsedTime;
+            return deltaTime;
         }
     }
 }
