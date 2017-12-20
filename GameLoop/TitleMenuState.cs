@@ -9,7 +9,8 @@ namespace GameLoop
 {
     class TitleMenuState : IGameObject
     {
-        float m_CurrentRotation = 0.0f;
+        private float m_CurrentRotation = 0.0f;
+        private const float SIZE_CONSTANT = 100.0f;
 
         public void Update(float deltaTime)
         {
@@ -26,13 +27,13 @@ namespace GameLoop
             Gl.glBegin(Gl.GL_TRIANGLE_STRIP);
 
             Gl.glColor4f(1.0f, 0.0f, 0.0f, 0.5f);
-            Gl.glVertex3f(-0.5f, 0.0f, 0.0f);
+            Gl.glVertex3f(SIZE_CONSTANT * -0.5f, 0.0f, 0.0f);
 
             Gl.glColor3f(0.0f, 1.0f, 0.0f);
-            Gl.glVertex3f(0.5f, 0.0f, 0.0f);
+            Gl.glVertex3f(SIZE_CONSTANT * 0.5f, 0.0f, 0.0f);
 
             Gl.glColor3f(0.0f, 0.0f, 1.0f);
-            Gl.glVertex3f(0.0f, 0.5f, 0.0f);
+            Gl.glVertex3f(0.0f, SIZE_CONSTANT * 0.5f, 0.0f);
 
             Gl.glEnd();
             Gl.glFinish();
