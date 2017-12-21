@@ -42,20 +42,27 @@ namespace GameLoop
 
         public void Draw()
         {
-            Texture texture = m_TextureManager.GetTexture("face");
+            Texture texture = m_TextureManager.GetTexture("face_alpha");
             Gl.glEnable(Gl.GL_TEXTURE_2D);
             Gl.glBindTexture(Gl.GL_TEXTURE_2D, texture.Id);
+            Gl.glEnable(Gl.GL_BLEND);
+            Gl.glBlendFunc(Gl.GL_SRC_ALPHA, Gl.GL_ONE_MINUS_SRC_ALPHA);
 
             //Gl.glClearColor(0.0f, 0.0f, 0.0f, 1.0f);
             //Gl.glClear(Gl.GL_COLOR_BUFFER_BIT);
 
-            float topUV = 0;
-            float bottomUV = 1;
-            float leftUV = 0;
-            float rightUV = 1;
+            float topUV = 0,
+                bottomUV = 1,
+                leftUV = 0,
+                rightUV = 1,
+                red = 1,
+                green = 0,
+                blue = 0,
+                alpha = 1;
 
             Gl.glBegin(Gl.GL_TRIANGLES);
 
+            Gl.glColor4f(red, green, blue, alpha);
             Gl.glTexCoord2f(leftUV, topUV);
             Gl.glVertex3f(m_X - m_HalfWidth, m_Y + m_HalfHeight, m_Z);
             Gl.glTexCoord2f(rightUV, topUV);

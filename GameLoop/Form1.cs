@@ -21,17 +21,11 @@ namespace GameLoop
 
         public Form1()
         {
-            
-
-            // Add all states to be used
-            m_System.AddState("splash", new SplashScreenState(m_System));
-            m_System.AddState("title_menu", new TitleMenuState());
-            m_System.AddState("sprite_test", new DrawSpriteState(m_TextureManager));
-            // Set the start state
-            m_System.ChangeState("sprite_test");
-
             InitializeComponent();
             m_OpenGLControl.InitializeContexts();
+            Setup2DGraphics(ClientSize.Width, ClientSize.Height);
+            m_TextureManager.LoadTexture("face", "face.tif");
+            m_TextureManager.LoadTexture("face_alpha", "face_alpha.tif");
 
             if (m_FullScreen)
             {
@@ -43,8 +37,15 @@ namespace GameLoop
                 ClientSize = new Size(1280, 720);
             }
 
-            Setup2DGraphics(ClientSize.Width, ClientSize.Height);
-            m_TextureManager.LoadTexture("face", "face.tif");
+            // Add all states to be used
+            m_System.AddState("splash", new SplashScreenState(m_System));
+            m_System.AddState("title_menu", new TitleMenuState());
+            m_System.AddState("sprite_test", new DrawSpriteState(m_TextureManager));
+            m_System.AddState("new_sprite_test", new TestSpriteClassState(m_TextureManager));
+
+            // Set the start state
+            m_System.ChangeState("new_sprite_test");
+            
             m_FastLoop = new FastLoop(GameLoop);
 
         }
@@ -57,7 +58,7 @@ namespace GameLoop
         protected override void OnClientSizeChanged(EventArgs e)
         {
             base.OnClientSizeChanged(e);
-            Gl.glViewport(0, 0, ClientSize.Width, ClientSize.Height);
+            Gl.glViewport(0, 0, this.ClientSize.Width, this.ClientSize.Height);
             Setup2DGraphics(ClientSize.Width, ClientSize.Height);
         }
 
@@ -68,7 +69,9 @@ namespace GameLoop
 
             Gl.glMatrixMode(Gl.GL_PROJECTION);
             Gl.glLoadIdentity();
-            Gl.glOrtho(-halfWidth, halfWidth, -halfHeight, halfHeight, -100.0, 100.0);
+            Gl.glOrtho(0, width, -height, 0, -100.0, 100.0);
+            Gl.glMatrixMode(Gl.GL_MODELVIEW);
+            Gl.glLoadIdentity();
         }
 
         private void GameLoop(float deltaTime)

@@ -27,7 +27,7 @@ namespace GameLoop
             Gl.glEnable(Gl.GL_TEXTURE_2D);
             Gl.glGenTextures(1, out int tex);
             Gl.glBindTexture(Gl.GL_TEXTURE_2D, tex);
-            
+            Console.WriteLine("TextureID: " + tex);
             BitmapData data = bitmap.LockBits(new Rectangle(0, 0, bitmap.Width, bitmap.Height),
                 ImageLockMode.ReadOnly, PixelFormat.Format32bppArgb);
 
